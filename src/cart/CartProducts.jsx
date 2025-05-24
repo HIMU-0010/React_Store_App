@@ -5,41 +5,32 @@ import { IoIosCloseCircleOutline } from "react-icons/io";
 
 
 export default function CartProducts() {
-    const { productData, setProductData } = useContext(ProductContext);
+    const { state, dispatch } = useContext(ProductContext);
 
-    const cartProducts = productData.filter(p => p.inCart > 0);
+    const cartProducts = state.productData.filter(p => p.inCart > 0);
 
     function handleAddToCart(product) {
-        setProductData(prev =>
-            prev.map(p =>
-                p.id === product.id
-                    ? { ...p, stock: Math.max(p.stock - 1), inCart: (p.inCart + 1 )}
-                    : p
-            )
-        );
-    }
+        dispatch({
+            type: "ADD_ONE_PRODUCT_TO_CART",
+            payload: product
+        });
+    };
 
     function handleRemoveFromCart(product) {
         if(product.inCart <= 1) return;
 
-        setProductData(prev =>
-            prev.map(p =>
-                p.id === product.id
-                    ? { ...p, stock: (p.stock + 1), inCart: Math.max(0, p.inCart - 1) }
-                    : p
-            )
-        );
-    }
+        dispatch({
+            type: "REMOVE_ONE_PRODUCT_FROM_CART",
+            payload: product
+        });
+    };
 
     function handleRemoveCartItem(product) {
-        setProductData(prev => 
-            prev.map(p => 
-                p.id === product.id
-                    ? {...p , stock: (p.stock + p.inCart) , inCart: 0}
-                    : p
-            )
-        );
-    }
+        dispatch({
+            type: "REMOVE_ALL_PRODUCT_FROM_CART",
+            payload: product
+        });
+    };
 
     return (
         cartProducts.map(item => (

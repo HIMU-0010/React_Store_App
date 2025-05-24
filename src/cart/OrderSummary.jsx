@@ -3,9 +3,9 @@ import { ProductContext } from "../context";
 
 export default function OrderSummary() {
 
-    const { productData } = useContext(ProductContext);
+    const { state } = useContext(ProductContext);
 
-    const cartProducts = productData.filter(p => p.inCart > 0);
+    const cartProducts = state.productData.filter(p => p.inCart > 0);
 
     const subtotal = cartProducts.reduce((total, item) =>  {
         return total + (item.price * item.inCart)

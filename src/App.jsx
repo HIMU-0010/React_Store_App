@@ -3,15 +3,14 @@ import Footer from "./Footer";
 import Header from "./Header";
 import NewsLetterSection from "./NewsLetterSection";
 import { ProductContext } from "./context";
-import { useState } from "react";
-import { getAllProduct } from "./data/products";
+import { useReducer } from "react";
+import { initialState, productReducer } from "./reducers/productReducers";
 
 export default function App() {
-  const [productData, setProductData] = useState(getAllProduct());
-  const [searchTerm, setSearchTerm] = useState("")
+  const [state, dispatch] = useReducer(productReducer, initialState)
   return (
     <>
-      <ProductContext.Provider value={{ productData, setProductData, searchTerm, setSearchTerm }}>
+      <ProductContext.Provider value={{ state, dispatch }}>
         <Header />
         <Products />
       </ProductContext.Provider>

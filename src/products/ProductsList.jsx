@@ -4,9 +4,9 @@ import { ProductContext } from "../context";
 
 export default function ProductsList({ sortOption }) {
 
-    const { productData, searchTerm } = useContext(ProductContext);
+    const { state } = useContext(ProductContext);
 
-    const sortedProducts = [...productData].sort((a, b) => {
+    const sortedProducts = [...state.productData].sort((a, b) => {
     if (sortOption === "Most Popular") {
       return b.rating - a.rating;
     } else if (sortOption === "Newest") {
@@ -20,7 +20,7 @@ export default function ProductsList({ sortOption }) {
   });
 
   const filteredProducts =  sortedProducts.filter(product =>
-    product.title.toLowerCase().includes(searchTerm.toLowerCase())
+    product.title.toLowerCase().includes(state.searchTerm.toLowerCase())
   );
 
     return (

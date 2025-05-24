@@ -3,7 +3,7 @@ import { ProductContext } from "./context";
 
 export default function Header() {
 
-    const {searchTerm, setSearchTerm} = useContext(ProductContext);
+    const {state, dispatch} = useContext(ProductContext);
 
     return (
         <>
@@ -28,8 +28,8 @@ export default function Header() {
                                 type="text" 
                                 placeholder="Search for products..."
                                 className="w-full bg-gray-100 rounded-full py-2 px-4 text-sm" 
-                                value={searchTerm}
-                                onChange={(e) => setSearchTerm(e.target.value)}
+                                value={state.searchTerm}
+                                onChange={(e) => dispatch({type: "SET_SEARCH_TERM", payload:e.target.value})}
                             />
                             <span className="absolute right-3 top-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24"

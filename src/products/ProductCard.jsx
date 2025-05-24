@@ -5,27 +5,21 @@ import { ProductContext } from "../context";
 
 export default function ProductCard({ product }) {
 
-    const { setProductData } = useContext(ProductContext);
+    const { dispatch } = useContext(ProductContext);
 
     function handleAddToCart(product) {
-        setProductData(prev =>
-            prev.map(p =>
-                p.id === product.id
-                    ? { ...p, stock: Math.max(p.stock - 1), inCart: (p.inCart + 1 )}
-                    : p
-            )
-        );
-    }
+        dispatch({
+            type: "ADD_ONE_PRODUCT_TO_CART",
+            payload: product
+        });
+    };
 
     function handleRemoveCartItem(product) {
-        setProductData(prev => 
-            prev.map(p => 
-                p.id === product.id
-                    ? {...p , stock: (p.stock + p.inCart) , inCart: 0}
-                    : p
-            )
-        );
-    }
+        dispatch({
+            type: "REMOVE_ALL_PRODUCT_FROM_CART",
+            payload: product
+        });
+    };
 
     return (
         <div className="bg-gray-100 rounded-lg overflow-hidden transition-transform hover:scale-[1.02] duration-300">
