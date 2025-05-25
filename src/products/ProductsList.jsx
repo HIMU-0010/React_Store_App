@@ -4,9 +4,9 @@ import { ProductContext } from "../context";
 
 export default function ProductsList({ sortOption }) {
 
-    const { state } = useContext(ProductContext);
+  const { state } = useContext(ProductContext);
 
-    const sortedProducts = [...state.productData].sort((a, b) => {
+  const sortedProducts = [...state.productData].sort((a, b) => {
     if (sortOption === "Most Popular") {
       return b.rating - a.rating;
     } else if (sortOption === "Newest") {
@@ -19,15 +19,22 @@ export default function ProductsList({ sortOption }) {
     return 0;
   });
 
-  const filteredProducts =  sortedProducts.filter(product =>
+  const filteredProducts = sortedProducts.filter(product =>
     product.title.toLowerCase().includes(state.searchTerm.toLowerCase())
   );
 
-    return (
-        <div className="product-grid">
-            {filteredProducts.map(product => (
-                <ProductCard key={product.id} product={product} />
-            ))}
-        </div>
-    )
+  return (
+    <div className="product-grid">
+      {filteredProducts.length > 0
+        ? (filteredProducts.map(product => (
+          <ProductCard key={product.id} product={product} />
+          )))
+        : (<div className="flex justify-center items-center h-96 w-full">
+            <p className="text-5xl font-semibold text-gray-900">
+              No Products Matched!
+            </p>
+          </div>)
+      }
+    </div>
+  )
 }
